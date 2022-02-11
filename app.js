@@ -13,9 +13,9 @@ const main = async() => {
     const tasks = new Tasks();
 
     const tasksDB = readDB()
-    await pause();
+    
     if(tasksDB){
-
+        tasks.loadTasksFromArray(tasksDB);
     }
     do{
         opt = await inquirerMenu();
