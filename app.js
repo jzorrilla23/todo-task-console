@@ -28,6 +28,11 @@ const main = async() => {
             case '2':
                 tasks.listComplete();
                 break;
+            case '3':
+                tasks.listCompletePending();
+                break;
+            case '4':
+                tasks.listCompletePending(false);
             default:
                 break;
         }
