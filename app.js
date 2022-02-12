@@ -26,7 +26,7 @@ const main = async() => {
                 tasks.createTask(desc);
                 break;
             case '2':
-                readDB()
+                tasks.listComplete();
                 break;
             default:
                 break;

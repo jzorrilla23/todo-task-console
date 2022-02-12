@@ -23,6 +23,15 @@ class Tasks{
         const task = new Task(desc);
         this._list[task.id] = task; 
     }
+
+    listComplete(){
+        Object.entries(this._list).forEach( (element,i) =>{
+            let index = String(i +  1).green;
+            const {desc, completeAt} = element[1]
+            let complete = completeAt == null ? 'pendiente'.red : 'complete'.green;
+            console.log(` ${index } ${desc} \t:: ${complete}`)
+        })
+    }
 }
 
 module.exports = Tasks;
