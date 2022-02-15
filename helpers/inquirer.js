@@ -54,6 +54,18 @@ const pause = async() => {
     return await inquirer.prompt({type:'input',name:'pause', message:`Press ${'enter'.green} to continue`});
 }
 
+const deleteMenu = async(tasks = [])=>{
+    const questions = [{type:'list',name:'id',message:'What you want to delete', choices:tasks}]
+    const {id} = await inquirer.prompt(questions)
+    return id;
+}
+
+const confirm = async(message = '')=>{
+    const question = [{type:'confirm', name:'ok', message}];
+    const { ok } = await inquirer.prompt(question);
+    return ok;
+}
+
 const readInput = async(message)=>{
     const question = [
         {
@@ -72,8 +84,34 @@ const readInput = async(message)=>{
     const { desc } = await inquirer.prompt(question);
     return desc;
 }
+
+const checkTaskComplete = async(tasks=[])=>{
+    const choices = tasks.map((task, i)=>{
+        const idx = `${i + 1}`.green;
+
+        return {
+            value:task.id,
+            name:`${idx} ${task.desc}`,
+            checked: task.completedAt != null
+        }
+    })
+
+    const question = [
+        {
+            type:'checkbox',
+            name:'ids',
+            message: 'Choose',
+            choices
+        }
+    ]
+    const {ids} = await inquirer.prompt(question);
+    return ids;
+}
 module.exports = {
     inquirerMenu,
     pause,
-    readInput
+    readInput,
+    deleteMenu,
+    confirm,
+    checkTaskComplete
 }
