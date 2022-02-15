@@ -1,6 +1,6 @@
 require('colors');
 const inquirer = require('inquirer');
-const { inquirerMenu, pause, readInput } = require('./helpers/inquirer');
+const { inquirerMenu, pause, readInput, deleteMenu, confirm, checkTaskComplete } = require('./helpers/inquirer');
 const { pausa } = require('./helpers/messages');
 const { saveDB, readDB } = require('./helpers/saveFile');
 const Task = require('./models/task');
@@ -33,6 +33,25 @@ const main = async() => {
                 break;
             case '4':
                 tasks.listCompletePending(false);
+                break;
+            case '5':
+                const ids = await checkTaskComplete(tasks.listArr);
+                tasks.toggleComplete(ids);
+                break;
+            case '6':
+                if(Object.keys(tasks._list).length == 0){
+                    console.log('There is no task')
+                }else{
+                    let tasksArr = Object.entries(tasks._list).map( (element, index) =>{
+                        return { id:element[1]['id'],value:index+1, name:`${String(index+1).green} ${element[1]['desc']}` }
+                    });
+                    let index = await deleteMenu(tasksArr)
+                    let task = tasksArr[index-1];
+                    let ok = await confirm('Are you sure to delete?');
+                    if(ok){
+                        tasks.deleteTask(task.id);
+                    }
+                }
             default:
                 break;
         }
