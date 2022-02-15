@@ -52,6 +52,7 @@ const main = async() => {
                         tasks.deleteTask(task.id);
                     }
                 }
+                break;
             default:
                 break;
         }
